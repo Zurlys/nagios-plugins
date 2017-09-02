@@ -134,7 +134,7 @@ if is_local:
 else:
     print('OK: Redis is using %dMB of RAM. Days Up: %s Clients: %s Version: %s' % \
           ( \
-              redis_info["used_memory"] / 1024 / 1024,
+              redis_info["used_memory"] // 1024 // 1024,
               redis_info["uptime_in_days"],
               redis_info["connected_clients"],
               redis_info["redis_version"]
