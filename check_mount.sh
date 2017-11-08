@@ -35,7 +35,8 @@ Beerware="Beer-ware licensed by Mantas Smelevicius <mantas@mantas.lt>"
 # Versions       Date        Programmer, Modification
 # ------------   ----------  ----------------------------------------------------
 #  Version=1.00 # 07/06/2017  Mantas Smelevicius. Initial version
-  Version=1.01 # 07/06/2017  Mantas Smelevicius. Fixed typos
+#  Version=1.01 # 07/06/2017  Mantas Smelevicius. Fixed typos
+Version=1.02 # 08/11/2017  Mantas Smelevicius. Fixed grep type when have similar mounts. F.ex. /data1 /data2
 #
 #########################################################################
 #set -x
@@ -84,7 +85,7 @@ if [ -z "$MOUNT" ]
     MOUNT="ceph"         # if $2 not specified, assume CEPH by default
 fi
 
-MOUNTED=`mount | grep $MOUNT | grep $FS | wc -l | tr -s " "`            # execute the command to check the mount...
+MOUNTED=`mount | grep $MOUNT | grep -w $FS | wc -l | tr -s " "`            # execute the command to check the mount...
 if [ $MOUNTED -eq 0 ]; then
     MSG="CRITICAL - $FS not mounted under $MOUNT."
     RC=$NAGIOS_CRIT
