@@ -85,14 +85,13 @@ except (socket.error, redis.exceptions.ConnectionError, redis.exceptions.Respons
     sys.exit(EXIT_NAGIOS_CRITICAL)
 
 # Redis VM
-if redis_info.get("vm_conf_pages", None) is not None and redis_info.get("vm_stats_used_pages", None) is not None:
-    if int(redis_info["vm_conf_pages"]) < int(redis_info["vm_stats_used_pages"]):
-        if (float(redis_info["vm_conf_pages"]) / float(redis_info["vm_stats_used_pages"])) < 0.5:
-            print('CRITICAL: Redis is using %d VM pages of %d allowed' % (int(redis_info["vm_stats_used_pages"]), int(redis_info["vm_conf_pages"])))
-            sys.exit(EXIT_NAGIOS_CRITICAL)
-        else:
-            print('WARN: Redis is using %d VM pages of %d allowed' % (int(redis_info["vm_stats_used_pages"]), int(redis_info["vm_conf_pages"])))
-            sys.exit(EXIT_NAGIOS_CRITICAL)
+if redis_info.get("vm_conf_pages", None) is not None and redis_info.get("vm_stats_used_pages", None) is not None and int(redis_info["vm_conf_pages"]) < int(redis_info["vm_stats_used_pages"]):
+    if (float(redis_info["vm_conf_pages"]) / float(redis_info["vm_stats_used_pages"])) < 0.5:
+        print('CRITICAL: Redis is using %d VM pages of %d allowed' % (int(redis_info["vm_stats_used_pages"]), int(redis_info["vm_conf_pages"])))
+        sys.exit(EXIT_NAGIOS_CRITICAL)
+    else:
+        print('WARN: Redis is using %d VM pages of %d allowed' % (int(redis_info["vm_stats_used_pages"]), int(redis_info["vm_conf_pages"])))
+        sys.exit(EXIT_NAGIOS_CRITICAL)
 
 # Redis memory usage
 
